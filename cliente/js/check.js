@@ -1,7 +1,10 @@
+//Esta clase crea el check en el padre especifico
 export class Check {
-    constructor(parent, client) {
-        this.parent = parent;
-        this.client = client;
+    constructor(groupList, client) {
+        //Le pasamos el grupo donde tiene que estar anexado en su adicion (addCheck)
+        this.groupList = groupList;
+        //this.client = client;
+
         this.states = [];
     }
 
@@ -11,20 +14,23 @@ export class Check {
     }
 
     //Añade los check-buttons al grupo
-    addCheck(name) {
+    addCheck(name, status) {
+        //Le paso el status que va a tener el check, este status lo traigo del servidor
         //Creo una variable que va a contener el nombre y el estado del chbutton
         this.states.push({
             name: name,
-            state: false
+            state: status
         })
         //Creo el elemento label y le agrego la clase form-switch; se lo anexo al padre.
         const check = document.createElement("label");
         check.classList.add("form-switch");
-        this.parent.appendChild(check);
+        this.groupList.appendChild(check);
 
         //Creo el input le meto un tipo checkbox y se lo anexo al padre
         const input = document.createElement("input");
         input.setAttribute('type', 'checkbox');
+        //Cambio su estado segun el estado mandado por el servidor
+        input.checked = status;
         check.appendChild(input);
 
         //Le agrego la etiqueta i ademas
@@ -38,8 +44,8 @@ export class Check {
         o apagado. */
 
         const span = document.createElement('span');
-        const text = document.createTextNode('OFF');
-        span.appendChild(text);
+        //cambio su texto del span dependiendo de su estado inicial
+        status ? span.innerHTML = "ON" : span.innerHTML = "OFF";
         check.appendChild(span);
         input.addEventListener('change', (event) => {
 

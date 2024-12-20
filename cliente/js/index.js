@@ -1,6 +1,10 @@
-import { Check } from './check.js';
+import { ServiceClient } from './ServiceClient.js';
+import { UI } from './UI.js';
 
-const Cliente = {
+//Llamo al metodo de mi constante ServiceClient y le paso la funcion que quiero ejecutar cuando todo salga correctamente
+ServiceClient.getChecksServed("http://localhost:3000/api/items", UI.draw);
+
+/* const Cliente = {
     send: (data)=>{
         fetch('http://localhost:3000/api/items', {
             method: 'POST',
@@ -25,14 +29,16 @@ const Cliente = {
     }
 }
 
-const check1 = new Check(document.getElementById("grupo1"),Cliente);
+const check1 = new Check(document.getElementById("grupo1"));
 check1.addCheck("riego1");
 check1.addCheck("riego2");
 
-const check2 = new Check(document.getElementById("grupo2"),Cliente);
+const check2 = new Check(document.getElementById("grupo2"));
 check2.addCheck("riego1");
 check2.addCheck("riego2");
 
-const check3 = new Check(document.getElementById("grupo3"),Cliente);
+const check3 = new Check(document.getElementById("grupo3"));
 check3.addCheck("riego1");
-check3.addCheck("riego2");
+check3.addCheck("riego2"); */
+
+

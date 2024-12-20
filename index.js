@@ -9,8 +9,57 @@ const PORT = 3000;
 app.use(cors());
 app.use(express.json());
 
+//Objeto datos que contiene una propiedad llamada lista que es un array con el grupo de valvulas que existen
+//Dentro de ese grupo hay unas valvulas pertenecientes a ese grupo en concreto con un nombre y un estado.
+
 const datos = {
-    lista: []
+    lista: [
+        {
+            name : "grupo1",
+            valves : [
+                {
+                    name : "valve1",
+                    status: true
+                },
+                {
+                    name : "valve2",
+                    status: false
+                },
+                {
+                    name : "valve3",
+                    status: false
+                },
+                {
+                    name : "valve4",
+                    status: true
+                },
+                {
+                    name : "valve5",
+                    status: true
+                },
+            ]
+        },
+
+        {
+            name : "grupo2",
+            valves : [
+                {
+                    name : "valve1",
+                    status: true
+                },
+                {
+                    name : "valve2",
+                    status: false
+                },
+                {
+                    name : "valve3",
+                    status: false
+                },
+            ]
+        }
+
+
+    ]
 }
 
 // Rutas
