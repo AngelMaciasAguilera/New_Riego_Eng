@@ -1,88 +1,88 @@
 import { ServiceClient } from "./ServiceClient.js";
-//Esta clase crea el check en el padre especifico
+// This class creates the check in the specific parent
 export class Check {
     constructor(groupList, client) {
-        //Le pasamos el grupo donde tiene que estar anexado en su adicion (addCheck)
+        // Pass the group where it should be attached upon addition (addCheck)
         this.groupList = groupList;
-        //this.client = client;
+        // this.client = client;
 
         this.states = [];
     }
 
     changeValue(id, status) {
-        //Busca dentro del array states de check una valvula cuyo id sea el de la valvula sobre el que se esta realizando
-        //Ahora bien me tienen que pasar el id del objeto para poder buscarlo y ademas el status que tiene ahora mismo.
-        /*¿Porque se va a modificar solo el objeto obtenido y no el objeto dentro del array this.states?
-            La logica es ganar eficiencia; this.states es un array que se esta cambiando cada vez que se recarga la pagina,
-            entonces imaginemos que tenemos un array this.states con unas 700 valvulas ¿Vas a recorrerlas 
-            todas hasta encontrar la que es por su id y luego cambiar su estado? No, eso tiene un grave problema de rendimiento
-            ya que si el usuario es el tipico "graciosillo" y le da 30 veces por segundo a la valvula estarias haciendo mas de
-            2000 operaciones por segundo en el array sin parar lo cual baja mucho el rendimiento. En lugar de eso lo
-            que hacemos es que encontramos el objeto y una vez tenemos dicho objeto modificamos su estado y lo enviamos al servidor
-            en lugar de tener que estar recorriendo un array y modificarlo y luego enviarlo.
+        // Searches within the 'states' array of Check for a valve whose ID matches the valve being processed
+        // Now, the method needs to be passed the ID of the object to find it, as well as its current status.
+        /* Why is only the obtained object modified and not the object within the 'this.states' array?
+           The logic is to improve efficiency; 'this.states' is an array that changes every time the page is reloaded.
+           Imagine having a 'this.states' array with about 700 valves. Would you iterate through all of them 
+           to find the one by its ID and then change its status? No, this approach has severe performance issues 
+           because if the user is the typical "troublemaker" and presses the valve 30 times per second, 
+           you would be performing over 2000 operations per second in the array nonstop, severely reducing performance. 
+           Instead, the object is located, and once found, its state is modified and sent to the server 
+           rather than iterating through the array to modify it and then send it.
         */
 
         const data = this.states.find((item) => item.id == id);
         data.state = status;
-        //le agrego la propiedad group que contiene el id del grupo donde se encuentra la valvula
+        // Add the 'group' property containing the ID of the group where the valve is located
         data.group = this.groupList.id;
         ServiceClient.sendCheckStatus(data);
     }
 
-    //Añade los check-buttons al grupo
-    //Cambio el parametro para que me metan directamente el objeto valvula en vez de sus propiedades una por una
+    // Adds the check-buttons to the group
+    // Change the parameter to directly receive the valve object instead of its properties one by one
     addCheck(valve) {
-        //Le paso el status que va a tener el check, este status lo traigo del servidor
-        //Creo una variable que va a contener el nombre y el estado del chbutton
+        // Pass the status that the check should have; this status is fetched from the server
+        // Create a variable containing the name and state of the check-button
         this.states.push({
-            id : valve.id,
+            id: valve.id,
             name: valve.name,
             state: valve.status
-        })
-        //Creo el elemento label y le agrego la clase form-switch; se lo anexo al padre.
+        });
+        // Create the label element, add the 'form-switch' class to it, and append it to the parent
         const check = document.createElement("label");
         check.classList.add("form-switch");
         this.groupList.appendChild(check);
 
-        //Creo el input le meto un tipo checkbox y se lo anexo al padre
+        // Create the input, set its type to 'checkbox,' and append it to the parent
         const input = document.createElement("input");
         input.setAttribute("id", valve.id);
         input.setAttribute('type', 'checkbox');
-        //Cambio su estado segun el estado mandado por el servidor
+        // Change its state according to the state sent by the server
         input.checked = valve.status;
         check.appendChild(input);
 
-        //Le agrego la etiqueta i ademas
+        // Add the 'i' tag as well
         check.appendChild(document.createElement("i"));
 
-        /*Creo el objeto span y guardo su referencia 
-        Ahora bien el ejercicio nos pide que modifiquemos el texto que esta en el span,
-        como ya tenemos la referencia de ese objeto span podemos usar esa misma referencia
-        en el change listener para que cada vez que cambie se compruebe el estado y en base 
-        a ese estado utilizaremos la referencia que ya tenemos para cambiar el texto segun este encendido
-        o apagado. */
+        /* Create the 'span' object and store its reference.
+           The exercise requires modifying the text in the 'span.' 
+           Since we already have the reference to the 'span' object, we can use this reference 
+           in the change listener to check the state every time it changes and, based on the state, 
+           use the reference to update the text depending on whether it is on or off.
+        */
 
         const span = document.createElement('span');
-        //cambio su texto del span dependiendo de su estado inicial
+        // Change the text of the span depending on its initial state
         valve.status ? span.innerHTML = "ON" : span.innerHTML = "OFF";
         check.appendChild(span);
         input.addEventListener('change', (event) => {
 
-            //Utilizamos la sintaxis ternaria para ahorrar codigo con if else etc.
-            /*¿Como funciona la sintaxis ternaria?
-                La sintaxis ternaria funciona mas o menos asi:
-                boolean ? primerValorAModificar : segundoValorAModificar
+            // Use ternary syntax to save code compared to if-else, etc.
+            /* How does ternary syntax work?
+               Ternary syntax works roughly as follows:
+               boolean ? firstValueToModify : secondValueToModify
 
-                Que significa esta sintaxis?
+               What does this syntax mean?
 
-                la ? es como decir que tienen un valor variable entre dos casos
-                el primerValorAModificar es lo que queremos en caso de que salga TRUE
-                y el segundo es lo que queremos hacer en caso de que salga FALSE.
+               The '?' represents a variable value between two cases.
+               'firstValueToModify' is what we want in case of TRUE.
+               'secondValueToModify' is what we want in case of FALSE.
             */
-            event.target.checked ? span.innerHTML = "ON" : span.innerHTML ="OFF";   
-            //Cambio el estado de la valvula sobre la que se ha aplicado el evento
-            //Le paso el id de la valvula 
+            event.target.checked ? span.innerHTML = "ON" : span.innerHTML = "OFF";   
+            // Change the state of the valve on which the event was applied
+            // Pass the ID of the valve
             this.changeValue(event.target.id, event.target.checked);
-        })
+        });
     }
 }

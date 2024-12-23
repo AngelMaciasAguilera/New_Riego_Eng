@@ -1,30 +1,30 @@
 import { Check } from "./check.js";
-/*Esta constante se va a encargar de pintar y gestionar toda la interfaz del usuario */
+/* This constant will handle rendering and managing the entire user interface */
 export const UI = {
-    //A este metodo le paso el array que me devuelve servidor y el se encargar de pintarlo a gusto de consumidor
-    draw : (array) => {
-        //Creo el contenedor padre
+    // This method receives the array returned by the server and handles rendering it for the user
+    draw: (array) => {
+        // Create the parent container
         let father = document.createElement("div");
-        //Le agrego la clase container
+        // Add the 'container' class
         father.classList.add("container");
-        //Recorro el array que me han pasado
+        // Iterate through the array that was passed
         for (const group of array) {
-            //Creo el elemento que va a tener la lista de valvulas
+            // Create the element that will contain the list of valves
             let groupList = document.createElement("div");
-            //le agrego el id que me llega desde el servidor
+            // Add the ID received from the server
             groupList.setAttribute("id", group.name);
-            //Recorro el array de valvulas de dicho grupo
+            // Iterate through the valves array of the group
             for (const valve of group.valves) {
-                //Creo el objeto check y le paso el grupo donde va a ser anexado sus checks correspondientes
+                // Create the 'Check' object and pass the group where its corresponding checks will be attached
                 let check = new Check(groupList);
-                //Le paso el nombre y el estado del check 
+                // Pass the name and state of the check
                 check.addCheck(valve);
             }
-            //Agrego al contenedor padre el grupo
-            father.appendChild(groupList)
+            // Add the group to the parent container
+            father.appendChild(groupList);
         }
 
-        //Agrego al body del html todo
+        // Append everything to the HTML body
         document.body.appendChild(father);
     }
 }

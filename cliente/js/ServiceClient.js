@@ -1,19 +1,19 @@
-/*Esta constante va a ser un objeto singgleton para poder realizar la conexion con el servidor.
-    Ademas se va a encargar de enviar y recibir los datos y procesarlos tambien, y es el que se va a encargar de 
-    "servirle" al cliente lo que este solicite o necesite
+/* This constant will be a singleton object to handle the connection with the server.
+   It will also be responsible for sending and receiving data, processing it, and 
+   "serving" the client with what it requests or needs.
 */
 export const ServiceClient = {
-    url : "",
-    //En este metodo le paso la url del servidor alojado y la funcion que quiero que se ejecute cuando todo salga correcto.
+    url: "",
+    // In this method, I pass the server's URL and the function I want to execute when everything goes well.
     getChecksServed: (url, callback) => {
-        //Hago esto para guardarme la url del servidor para futuros usos
-        //De esta manera evito que el usuario tenga que poner de manera repetitiva la url,
-        //Simplemente la primera vez que se llama capturo la url del servidor y la reutilizo en futuras necesidades.
+        // I do this to save the server URL for future use.
+        // This way, I avoid requiring the user to repeatedly input the URL.
+        // Simply capture the server URL the first time it is called and reuse it in future needs.
         ServiceClient.url = url;
         fetch(url).then(
             async (array) => {
                 let myarray = await array.json();
-                //A esa funcion le paso el array con las valvulas
+                // Pass the array with the valves to the callback function.
                 callback(myarray);
             }
         )

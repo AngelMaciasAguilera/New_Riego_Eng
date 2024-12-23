@@ -1,47 +1,37 @@
-# New_Riego
+# New_Riego_Eng
 
+### I have modified the text of the checkbutton depending on whether its state is `false` or `true`.
 
-### En esta primera seccion hemos hecho el primer apartado del examen. Este primer apartado consisitia en modificar el texto del checkbutton dependiendo de si su estado estuviera a false o true.
+#### To accomplish this, I only modified `check.js`.
 
-#### para la realizacion de dicho apartado unicamente he tocado el check.js
-
-##### Captura del codigo hecho: 
-
+##### Screenshot of the implemented code:
 
 ![alt text](image.png)
 
+---
 
+### Fetching groups of valves and their corresponding valves from the server, and rendering them with the configuration provided by the server.
 
+#### To achieve this, I created a constant `ServiceClient`, which is the object responsible for managing the connection between the client and the server. It includes a method `getChecksServed` that retrieves the valves and their groups from the server.
 
-### En esta segunda seccion he hecho el segundo apartado del examen. Este segundo apartado consistia en obtener los grupos de valvulas y sus valvulas correspondientes del servidor y una vez hecho eso pintarlo con la configuracion que nos viene del servidor.
+#### Additionally, I created a `UI` class to handle the graphical interface of the client.
 
-#### Para la realizacion de dicho apartado he creado una constante ServiceClient que es el objeto que se va a encargar de manejar la conexion entre el cliente y el servidor. Tiene un metodo getChecksServed que me devuelve las valvulas del servidor con sus grupos.
-
-#### Ademas he creado una clase UI para manejar el apartado grafico del cliente.
-
-##### Captura de como ha quedado: 
+##### Screenshot of the result:
 
 ![alt text](image-1.png)
 
+#### In this image, you can see the valves created correctly, each with the state received from the server.
 
-#### En esta imagen se pueden ver las valvulas creadas correctamente y cada una con el estado que le llega del servidor.
+---
 
+### Maintaining the state of the valves even when the page is refreshed or the tab is changed.
 
+#### To achieve this, I created a method in my `ServiceClient` constant called `sendCheckStatus`, which is responsible for sending the valve's state to the server. On the server side, I configured it to appropriately update the data by modifying only the state of the changed valve. How did I do this? I added an `id` field to the valves to make it easier to identify them within the specific group.
 
-
-### En esta ultima seccion he hecho el ultimo apartado del examen. Este ultimo apartado consistia en mantener el estado de las valvulas aunque se recargara la pagina o se cambiara de pestaña.
-
-
-#### Para la realizacion de dicha tarea he creado un metodo en mi constante ServiceClient llamado sendCheckStatus que se va a encargar de enviarle al servidor el estado de la valvula. Una vez ahi he configurado el servidor de tal manera que los datos se modifiquen de manera adecuada, modificando el estado solo de la valvula cambiada. ¿Como lo he hecho? he agregado un campo id a las valvulas para que de esa manera se mas sencillo identificar las valvulas dentro del grupo en concreto. 
-
-##### Antes de recargar la pagina 
-
+##### Before refreshing the page:
 
 ![alt text](image-2.png)
 
-
-##### Despues de recargar la pagina
+##### After refreshing the page:
 
 ![alt text](image-3.png)
-
-
