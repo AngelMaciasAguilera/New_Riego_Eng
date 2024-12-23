@@ -18,7 +18,7 @@ export const UI = {
                 //Creo el objeto check y le paso el grupo donde va a ser anexado sus checks correspondientes
                 let check = new Check(groupList);
                 //Le paso el nombre y el estado del check 
-                check.addCheck(valve.name, valve.status);
+                check.addCheck(valve);
             }
             //Agrego al contenedor padre el grupo
             father.appendChild(groupList)
