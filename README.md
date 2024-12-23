@@ -26,3 +26,22 @@
 
 #### En esta imagen se pueden ver las valvulas creadas correctamente y cada una con el estado que le llega del servidor.
 
+
+
+
+### En esta ultima seccion he hecho el ultimo apartado del examen. Este ultimo apartado consistia en mantener el estado de las valvulas aunque se recargara la pagina o se cambiara de pestaña.
+
+
+#### Para la realizacion de dicha tarea he creado un metodo en mi constante ServiceClient llamado sendCheckStatus que se va a encargar de enviarle al servidor el estado de la valvula. Una vez ahi he configurado el servidor de tal manera que los datos se modifiquen de manera adecuada, modificando el estado solo de la valvula cambiada. ¿Como lo he hecho? he agregado un campo id a las valvulas para que de esa manera se mas sencillo identificar las valvulas dentro del grupo en concreto. 
+
+##### Antes de recargar la pagina 
+
+
+![alt text](image-2.png)
+
+
+##### Despues de recargar la pagina
+
+![alt text](image-3.png)
+
+
